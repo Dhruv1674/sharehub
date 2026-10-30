@@ -1,0 +1,5 @@
+import { MapPin, Clock3, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
+export default function ResourceCard({resource}){
+ return <article className="resource-card"><div className="resource-image" style={resource.imageUrl?{backgroundImage:`linear-gradient(180deg,transparent,#10182799),url(${resource.imageUrl})`}:{}}><span className="category-pill">{resource.category}</span><span className="available-pill"><i/> Available</span></div><div className="resource-body"><div className="resource-title-row"><h3>{resource.title}</h3><ArrowUpRight size={18} className="muted"/></div><p>{resource.description||"Shared campus resource available for approved use."}</p><div className="resource-meta"><span><MapPin size={14}/>{resource.location}</span><span><ShieldCheck size={14}/>{resource.requiresTraining?"Training required":"Open access"}</span></div><div className="resource-footer"><span className="owner-label">Provided by <b>{resource.owner?.name||"Campus owner"}</b></span><Link className="text-link" to={`/resources/${resource._id}`}>View details →</Link></div></div></article>
+}

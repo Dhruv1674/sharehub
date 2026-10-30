@@ -1,0 +1,8 @@
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Boxes, LayoutDashboard, CalendarDays, ClipboardList, LogOut, PlusCircle, ShieldCheck } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+export default function Layout(){
+ const {user,logout}=useAuth(); const navigate=useNavigate();
+ const links=[["/","Explore",Boxes],["/dashboard","Dashboard",LayoutDashboard],["/bookings","Bookings",CalendarDays],["/requests","Requests",ClipboardList],["/add-resource","List resource",PlusCircle],["/incidents","Incidents",ShieldCheck]];
+ return <div className="app-shell"><aside className="sidebar"><div className="brand"><span className="brand-mark">S</span><span>sharehub</span></div><div className="side-label">WORKSPACE</div><nav>{links.filter(([path])=>!["/requests","/add-resource"].includes(path)||["owner","admin"].includes(user?.role)).map(([path,label,Icon])=><NavLink key={path} to={path} end={path==="/"}><Icon size={18}/>{label}</NavLink>)}</nav><div className="side-bottom"><div className="avatar">{user?.name?.[0]?.toUpperCase()||"U"}</div><div className="user-meta"><b>{user?.name}</b><small>{user?.role}</small></div><button className="icon-btn" title="Log out" onClick={()=>{logout();navigate("/login")}}><LogOut size={17}/></button></div></aside><main className="main"><header className="topbar"><div><span className="eyebrow">CAMPUS RESOURCE NETWORK</span><div className="top-title">Make more of what we have.</div></div><div className="top-right"><span className="status-dot"/> Platform online <span className="top-avatar">{user?.name?.[0]?.toUpperCase()}</span></div></header><div className="content"><Outlet/></div></main></div>
+}
